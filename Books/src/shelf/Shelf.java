@@ -5,8 +5,9 @@ import book.*;
 
 public class Shelf {
 
+    static ArrayList<Book> bookArray = new ArrayList<Book>();
+    
     public static void main(String[] args) {
-        ArrayList<Book> bookArray = new ArrayList<Book>();
         putOnShelf(args, bookArray);
 
         for(int i = 0; i < bookArray.size(); i++) {
