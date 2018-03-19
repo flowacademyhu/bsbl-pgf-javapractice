@@ -29,6 +29,6 @@ public class VideoClip extends Mp3 {
 
     @Override
     public String toString() {
-        return super.toString() + "The picture ratio is " + width / height + ".";
+        return super.toString() + " The picture ratio is " + width / height + ".";
     }
 }

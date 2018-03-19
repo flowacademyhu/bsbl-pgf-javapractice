@@ -12,7 +12,7 @@ public class Winamp {
         winamp.add(new VideoClip("Nine Inch Nails", "The Downward Spiral", "Closer", 373, 1920, 1080));
         winamp.add(new Mp3("The Glitch Mob", "Remix", "Seven Nation Army", 257));
 
-        System.out.println(winamp.averageLength(winamp.songs));
+        System.out.println("The average length of the songs is: " + winamp.averageLength(winamp.songs) + " seconds.");
         winamp.listSongs(winamp.songs);
     }
 
