@@ -7,8 +7,6 @@ public class Inventory {
 
     static ArrayList<DairyProduct> dairyList = new ArrayList<>();
     static ArrayList<Fruit> fruitList = new ArrayList<>();
-    static ArrayList<Object> expired = new ArrayList<>();
-    static ArrayList<Object> good = new ArrayList<>();
 
     public static void main(String[] args) {
 
