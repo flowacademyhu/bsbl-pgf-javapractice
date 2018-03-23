@@ -1,4 +1,6 @@
-public class Video implements Rentable {
+import java.io.Serializable;
+
+public class Video implements Rentable, Serializable {
 
     private String title;
     private boolean isRented;
