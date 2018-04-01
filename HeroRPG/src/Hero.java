@@ -9,6 +9,7 @@ public abstract class Hero {
     private int currentAP;
     private float criticalChance;
     private float damageModifier;
+    private int spellCooldown;
 
     public Hero(String name, int strength, int dexterity, int intelligence, int constitution, int speed, int perception) {
         this.name = name;
@@ -20,13 +21,14 @@ public abstract class Hero {
         this.criticalChance = 0.2f + perception * 0.02f;
         this.damageModifier = 0.5f + strength * 0.1f;
         currentAP = startAP;
+        spellCooldown = 0;
     }
 
     public abstract void Attack(Hero hero);
 
     public abstract void Spell(Hero hero);
 
-    public abstract void Defend();
+    public abstract void Heal();
 
     public String getName() {
         return name;
@@ -98,6 +100,14 @@ public abstract class Hero {
 
     public void setDamageModifier(float damageModifier) {
         this.damageModifier = damageModifier;
+    }
+
+    public int getSpellCooldown() {
+        return spellCooldown;
+    }
+
+    public void setSpellCooldown(int spellCooldown) {
+        this.spellCooldown = spellCooldown;
     }
 
     @Override

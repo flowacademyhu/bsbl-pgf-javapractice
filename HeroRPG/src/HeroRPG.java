@@ -49,14 +49,14 @@ public class HeroRPG {
     private JTextField player2AP;
     private JButton attackButton;
     private JButton spellButton;
-    private JButton defendButton;
+    private JButton healButton;
     private JButton endTurn;
     private JTextField battleLog;
 
 
     private static int spentAttributePoints;
-    Hero hero1;
-    Hero hero2;
+    private Hero hero1;
+    private Hero hero2;
     private enum Player {PLAYER1, PLAYER2}
     private Player player = Player.PLAYER1;
 
@@ -90,6 +90,7 @@ public class HeroRPG {
 
         attackButton.addActionListener(new Attack());
         spellButton.addActionListener(new UseSpell());
+        healButton.addActionListener(new Heal());
         endTurn.addActionListener(new EndTurn());
     }
 
@@ -194,7 +195,7 @@ public class HeroRPG {
                     player2AP.setText(hero2.getCurrentAP() + " AP");
                     // The player with the higher offensive rating starts the game
                     // If they are equal player1 gets to be first
-                    if (hero1.getOffensiveRating() > hero2.getOffensiveRating()) {
+                    if (hero1.getOffensiveRating() >= hero2.getOffensiveRating()) {
                         player = Player.PLAYER1;
                     }
                 }
@@ -235,26 +236,48 @@ public class HeroRPG {
                     hero1.Spell(hero1);
                     player1AP.setText(hero1.getCurrentAP() + " AP");
                     battleLog.setText(hero1.getName() + " buffed their attack damage");
+                } else if(hero1 instanceof Mage) {
+                    hero1.Spell(hero2);
+                    player1AP.setText(hero1.getCurrentAP() + " AP");
+                    battleLog.setText(hero1.getName() + " debuffed " + hero2.getName() + "'s defensive rating");
+                } else if(hero1 instanceof Thief) {
+                    hero1.Spell(hero2);
+                    player1AP.setText(hero1.getCurrentAP() + " AP");
+                    battleLog.setText(hero1.getName() + " decreased " + hero2.getName() + "'s health");
                 }
             } else {
                 if (hero2 instanceof Warrior) {
                     hero2.Spell(hero2);
-                    player1AP.setText(hero2.getCurrentAP() + " AP");
+                    player2AP.setText(hero2.getCurrentAP() + " AP");
                     battleLog.setText(hero2.getName() + " buffed their attack damage");
+                } else if(hero2 instanceof Mage) {
+                    hero2.Spell(hero1);
+                    player2AP.setText(hero2.getCurrentAP() + " AP");
+                    battleLog.setText(hero2.getName() + " debuffed " + hero1.getName() + "'s defensive rating");
+                } else if(hero1 instanceof Thief) {
+                    hero2.Spell(hero1);
+                    player2AP.setText(hero2.getCurrentAP() + " AP");
+                    battleLog.setText(hero2.getName() + " decreased " + hero1.getName() + "'s health");
                 }
             }
         }
     }
 
-    //TODO: implement Defend class
+    private class Heal implements ActionListener {
 
-    private class Defend implements ActionListener {
-
-        public Defend() {}
+        public Heal() {}
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-
+            if(player == Player.PLAYER1) {
+                hero1.Heal();
+                player1AP.setText(hero1.getCurrentAP() + " AP");
+                battleLog.setText(hero1.getName() + " healed themself");
+            } else {
+                hero2.Heal();
+                player2AP.setText(hero2.getCurrentAP() + " AP");
+                battleLog.setText(hero2.getName() + " healed themself");
+            }
         }
     }
 
@@ -266,11 +289,25 @@ public class HeroRPG {
         public void actionPerformed(ActionEvent actionEvent) {
             if (player == Player.PLAYER1) {
                 hero1.setCurrentAP(hero1.getCurrentAP() + hero1.getTurnAP());
+                hero1.setSpellCooldown(hero1.getSpellCooldown() - 1);
                 player1AP.setText(hero1.getCurrentAP() + " AP");
+                if(hero1.getHealth() <= 0) {
+                    battleLog.setText(hero2.getName() + " won the game");
+                }
+                if(hero2.getHealth() <= 0) {
+                    battleLog.setText(hero1.getName() + " won the game");
+                }
                 player = Player.PLAYER2;
             } else {
                 hero2.setCurrentAP(hero2.getCurrentAP() + hero2.getTurnAP());
+                hero1.setSpellCooldown(hero1.getSpellCooldown() - 1);
                 player2AP.setText(hero2.getCurrentAP() + " AP");
+                if(hero1.getHealth() <= 0) {
+                    battleLog.setText(hero2.getName() + " won the game");
+                }
+                if(hero2.getHealth() <= 0) {
+                    battleLog.setText(hero1.getName() + " won the game");
+                }
                 player = Player.PLAYER1;
             }
         }
