@@ -301,7 +301,7 @@
             </constraints>
             <properties>
               <horizontalAlignment value="0"/>
-              <text value="BAD MOTHERFUCKER"/>
+              <text value="BEST. GAME. EVER. 10/10 - IGN"/>
             </properties>
           </component>
           <component id="93b89" class="javax.swing.JTextField" binding="player1Stats">
