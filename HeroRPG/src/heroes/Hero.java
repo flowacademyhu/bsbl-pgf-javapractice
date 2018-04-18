@@ -1,3 +1,5 @@
+package heroes;
+
 public abstract class Hero {
 
     private String name;

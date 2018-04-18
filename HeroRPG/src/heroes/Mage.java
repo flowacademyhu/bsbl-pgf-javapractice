@@ -1,4 +1,8 @@
-public class Mage extends Hero{
+package heroes;
+
+import heroes.Hero;
+
+public class Mage extends Hero {
 
     public Mage(String name, int strength, int dexterity, int intelligence, int constitution, int speed, int perception) {
         super(name, strength, dexterity, intelligence, constitution, speed, perception);
@@ -50,6 +54,6 @@ public class Mage extends Hero{
 
     @Override
     public String toString() {
-        return "Mage{} " + super.toString();
+        return "heroes.Mage{} " + super.toString();
     }
 }

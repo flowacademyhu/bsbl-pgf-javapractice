@@ -1,15 +1,20 @@
+package gui;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import gui.actionlisteners.*;
+import heroes.*;
 
 public class HeroRPG {
 
-    JFrame frame = new JFrame("HeroRPG");
+    public JFrame frame = new JFrame("HeroRPG");
     private JPanel mainForm;
-    private JPanel characterCreator;
-    private JPanel nextPanel;
+    public JPanel characterCreator;
+    public JPanel battle;
 
     //Character creation panel
+    private JLabel title1;
     private JButton increaseStrength;
     private JButton increaseDexterity;
     private JButton increaseIntelligence;
@@ -38,7 +43,7 @@ public class HeroRPG {
     private JTextField characterField;
 
     //Battle panel
-    private JTextField nextField;
+    private JLabel title2;
     private JTextField player1Stats;
     private JTextField player2Stats;
     private JTextField player1Name;
@@ -53,17 +58,23 @@ public class HeroRPG {
     private JButton endTurn;
     private JTextField battleLog;
 
+    public static int spentAttributePoints;
 
-    private static int spentAttributePoints;
-    private Hero hero1;
-    private Hero hero2;
-    private enum Player {PLAYER1, PLAYER2}
-    private Player player = Player.PLAYER1;
+    public static Hero hero1;
+    public static Hero hero2;
+    public enum Player {PLAYER1, PLAYER2}
+    public static Player player = Player.PLAYER1;
 
-    static HeroRPG heroRPG = new HeroRPG();
+    public static HeroRPG heroRPG = new HeroRPG();
 
 
     public static void main(String[] args) {
+        heroRPG.strengthNumber.setEditable(false);
+        heroRPG.dexterityNumber.setEditable(false);
+        heroRPG.intelligenceNumber.setEditable(false);
+        heroRPG.constitutionNumber.setEditable(false);
+        heroRPG.speedNumber.setEditable(false);
+        heroRPG.perceptionNumber.setEditable(false);
         heroRPG.frame.setContentPane(heroRPG.characterCreator);
         heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         heroRPG.frame.pack();
@@ -80,20 +91,24 @@ public class HeroRPG {
         increaseConstitution.addActionListener(new IncreaseAttribute(Integer.parseInt(constitutionNumber.getText()), constitutionNumber));
         increaseSpeed.addActionListener(new IncreaseAttribute(Integer.parseInt(speedNumber.getText()), speedNumber));
         increasePerception.addActionListener(new IncreaseAttribute(Integer.parseInt(perceptionNumber.getText()), perceptionNumber));
+
         decreaseStrength.addActionListener(new DecreaseAttribute(Integer.parseInt(strengthNumber.getText()), strengthNumber));
         decreaseDexterity.addActionListener(new DecreaseAttribute(Integer.parseInt(dexterityNumber.getText()), dexterityNumber));
         decreaseIntelligence.addActionListener(new DecreaseAttribute(Integer.parseInt(intelligenceNumber.getText()), intelligenceNumber));
         decreaseConstitution.addActionListener(new DecreaseAttribute(Integer.parseInt(constitutionNumber.getText()), constitutionNumber));
         decreaseSpeed.addActionListener(new DecreaseAttribute(Integer.parseInt(speedNumber.getText()), speedNumber));
         decreasePerception.addActionListener(new DecreaseAttribute(Integer.parseInt(perceptionNumber.getText()), perceptionNumber));
-        createCharacter.addActionListener(new CreateCharacter());
 
-        attackButton.addActionListener(new Attack());
-        spellButton.addActionListener(new UseSpell());
-        healButton.addActionListener(new Heal());
-        endTurn.addActionListener(new EndTurn());
+        createCharacter.addActionListener(new CreateCharacter(nameField, warrior, mage, thief, strengthNumber, dexterityNumber, intelligenceNumber,
+                constitutionNumber, speedNumber, perceptionNumber, characterField, player1Stats, player2Stats, player1Name, player2Name,
+                player1Health, player2Health, player1AP, player2AP));
+
+        attackButton.addActionListener(new Attack(player1Health, player2Health, player1AP, player2AP, battleLog));
+        spellButton.addActionListener(new UseSpell(player1Health, player2Health, player1AP, player2AP, battleLog));
+        healButton.addActionListener(new Heal(player1Health, player2Health, player1AP, player2AP, battleLog));
+        endTurn.addActionListener(new EndTurn(player1AP, player2AP, battleLog));
     }
-
+    /*
     private class IncreaseAttribute implements ActionListener {
         private int value;
         private JTextField field;
@@ -113,7 +128,8 @@ public class HeroRPG {
             }
         }
     }
-
+    */
+    /*
     private class DecreaseAttribute implements ActionListener {
         private int value;
         private JTextField field;
@@ -133,7 +149,8 @@ public class HeroRPG {
             }
         }
     }
-
+    */
+    /*
     private class CreateCharacter implements ActionListener {
 
         public CreateCharacter() {
@@ -181,7 +198,7 @@ public class HeroRPG {
                                 Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
                     }
                     characterField.setText(hero2.toString());
-                    heroRPG.frame.setContentPane(heroRPG.nextPanel);
+                    heroRPG.frame.setContentPane(heroRPG.battle);
                     heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     heroRPG.frame.pack();
                     heroRPG.frame.setVisible(true);
@@ -202,7 +219,8 @@ public class HeroRPG {
             }
         }
     }
-
+    */
+    /*
     private class Attack implements ActionListener {
 
         public Attack() {
@@ -212,7 +230,7 @@ public class HeroRPG {
         public void actionPerformed(ActionEvent actionEvent) {
             if (player == Player.PLAYER1) {
                 hero1.Attack(hero2);
-                player2Health.setText(hero2.getHealth() + " HP");
+                player2Health.setText(hero2.getSHealth() + " HP");
                 player1AP.setText(hero1.getCurrentAP() + " AP");
                 battleLog.setText(hero1.getName() + " attacked " + hero2.getName());
             } else {
@@ -222,9 +240,8 @@ public class HeroRPG {
                 battleLog.setText(hero2.getName() + " attacked " + hero1.getName());
             }
         }
-    }
-
-    //TODO: implement for other classes
+    */
+    /*
     private class UseSpell implements ActionListener {
 
         public UseSpell() {}
@@ -262,7 +279,8 @@ public class HeroRPG {
             }
         }
     }
-
+    */
+/*
     private class Heal implements ActionListener {
 
         public Heal() {}
@@ -280,7 +298,8 @@ public class HeroRPG {
             }
         }
     }
-
+*/
+/*
     private class EndTurn implements ActionListener {
 
         public EndTurn() {}
@@ -312,4 +331,5 @@ public class HeroRPG {
             }
         }
     }
+    */
 }
