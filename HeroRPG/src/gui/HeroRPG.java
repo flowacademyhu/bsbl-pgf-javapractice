@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import gui.actionlisteners.*;
@@ -12,6 +13,7 @@ public class HeroRPG {
     private JPanel mainForm;
     public JPanel characterCreator;
     public JPanel battle;
+    public JPanel end;
 
     //Character creation panel
     private JLabel title1;
@@ -40,7 +42,6 @@ public class HeroRPG {
 
     private JTextField nameField;
     private JButton createCharacter;
-    private JTextField characterField;
 
     //Battle panel
     private JLabel title2;
@@ -57,6 +58,12 @@ public class HeroRPG {
     private JButton healButton;
     private JButton endTurn;
     private JTextField battleLog;
+
+    //End panel
+    private JLabel title3;
+    private JButton restartButton;
+    private JButton exitButton;
+    private JTextField result;
 
     public static int spentAttributePoints;
 
@@ -75,9 +82,11 @@ public class HeroRPG {
         heroRPG.constitutionNumber.setEditable(false);
         heroRPG.speedNumber.setEditable(false);
         heroRPG.perceptionNumber.setEditable(false);
+        heroRPG.result.setEditable(false);
         heroRPG.frame.setContentPane(heroRPG.characterCreator);
         heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         heroRPG.frame.pack();
+        heroRPG.frame.setMinimumSize(new Dimension(400, 500));
         heroRPG.frame.setVisible(true);
         heroRPG.group.add(heroRPG.warrior);
         heroRPG.group.add(heroRPG.mage);
@@ -100,236 +109,16 @@ public class HeroRPG {
         decreasePerception.addActionListener(new DecreaseAttribute(Integer.parseInt(perceptionNumber.getText()), perceptionNumber));
 
         createCharacter.addActionListener(new CreateCharacter(nameField, warrior, mage, thief, strengthNumber, dexterityNumber, intelligenceNumber,
-                constitutionNumber, speedNumber, perceptionNumber, characterField, player1Stats, player2Stats, player1Name, player2Name,
+                constitutionNumber, speedNumber, perceptionNumber, player1Stats, player2Stats, player1Name, player2Name,
                 player1Health, player2Health, player1AP, player2AP));
 
         attackButton.addActionListener(new Attack(player1Health, player2Health, player1AP, player2AP, battleLog));
         spellButton.addActionListener(new UseSpell(player1Health, player2Health, player1AP, player2AP, battleLog));
         healButton.addActionListener(new Heal(player1Health, player2Health, player1AP, player2AP, battleLog));
-        endTurn.addActionListener(new EndTurn(player1AP, player2AP, battleLog));
+        endTurn.addActionListener(new EndTurn(frame, player1AP, player2AP, battleLog, result));
+
+        restartButton.addActionListener(new Restart(nameField, strengthNumber, dexterityNumber, intelligenceNumber,
+                constitutionNumber, speedNumber, perceptionNumber, battleLog));
+        exitButton.addActionListener(new Exit());
     }
-    /*
-    private class IncreaseAttribute implements ActionListener {
-        private int value;
-        private JTextField field;
-
-        public IncreaseAttribute(int value, JTextField field) {
-            this.value = value;
-            this.field = field;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            value = Integer.parseInt(field.getText());
-            if (value < 10 && spentAttributePoints < 40) {
-                value++;
-                field.setText(String.valueOf(value));
-                spentAttributePoints++;
-            }
-        }
-    }
-    */
-    /*
-    private class DecreaseAttribute implements ActionListener {
-        private int value;
-        private JTextField field;
-
-        public DecreaseAttribute(int value, JTextField field) {
-            this.value = value;
-            this.field = field;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            value = Integer.parseInt(field.getText());
-            if (Integer.parseInt(field.getText()) > 0 && spentAttributePoints > 0) {
-                value--;
-                field.setText(String.valueOf(value));
-                spentAttributePoints--;
-            }
-        }
-    }
-    */
-    /*
-    private class CreateCharacter implements ActionListener {
-
-        public CreateCharacter() {
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            if (spentAttributePoints == 40 && !nameField.equals("")) {
-                if (player == Player.PLAYER1) {
-                    if(warrior.isSelected()) {
-                        hero1 = new Warrior(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
-                                Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
-                                Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
-                    } else if(mage.isSelected()) {
-                        hero1 = new Mage(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
-                                Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
-                                Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
-                    } else {
-                        hero1 = new Thief(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
-                                Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
-                                Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
-                    }
-                    characterField.setText(hero1.toString());
-                    player = Player.PLAYER2;
-                    spentAttributePoints = 0;
-                    strengthNumber.setText("0");
-                    dexterityNumber.setText("0");
-                    intelligenceNumber.setText("0");
-                    constitutionNumber.setText("0");
-                    speedNumber.setText("0");
-                    perceptionNumber.setText("0");
-                    nameField.setText("");
-                } else {
-                    if(warrior.isSelected()) {
-                        hero2 = new Warrior(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
-                                Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
-                                Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
-                    } else if(mage.isSelected()) {
-                        hero2 = new Mage(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
-                                Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
-                                Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
-                    } else {
-                        hero2 = new Thief(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
-                                Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
-                                Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
-                    }
-                    characterField.setText(hero2.toString());
-                    heroRPG.frame.setContentPane(heroRPG.battle);
-                    heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    heroRPG.frame.pack();
-                    heroRPG.frame.setVisible(true);
-                    player1Stats.setText(hero1.toString());
-                    player2Stats.setText(hero2.toString());
-                    player1Name.setText(hero1.getName());
-                    player2Name.setText(hero2.getName());
-                    player1Health.setText(hero1.getHealth() + " HP");
-                    player2Health.setText(hero2.getHealth() + " HP");
-                    player1AP.setText(hero1.getCurrentAP() + " AP");
-                    player2AP.setText(hero2.getCurrentAP() + " AP");
-                    // The player with the higher offensive rating starts the game
-                    // If they are equal player1 gets to be first
-                    if (hero1.getOffensiveRating() >= hero2.getOffensiveRating()) {
-                        player = Player.PLAYER1;
-                    }
-                }
-            }
-        }
-    }
-    */
-    /*
-    private class Attack implements ActionListener {
-
-        public Attack() {
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            if (player == Player.PLAYER1) {
-                hero1.Attack(hero2);
-                player2Health.setText(hero2.getSHealth() + " HP");
-                player1AP.setText(hero1.getCurrentAP() + " AP");
-                battleLog.setText(hero1.getName() + " attacked " + hero2.getName());
-            } else {
-                hero2.Attack(hero1);
-                player1Health.setText(hero1.getHealth() + " HP");
-                player2AP.setText(hero2.getCurrentAP() + " AP");
-                battleLog.setText(hero2.getName() + " attacked " + hero1.getName());
-            }
-        }
-    */
-    /*
-    private class UseSpell implements ActionListener {
-
-        public UseSpell() {}
-
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            if (player == Player.PLAYER1) {
-                if (hero1 instanceof Warrior) {
-                    hero1.Spell(hero1);
-                    player1AP.setText(hero1.getCurrentAP() + " AP");
-                    battleLog.setText(hero1.getName() + " buffed their attack damage");
-                } else if(hero1 instanceof Mage) {
-                    hero1.Spell(hero2);
-                    player1AP.setText(hero1.getCurrentAP() + " AP");
-                    battleLog.setText(hero1.getName() + " debuffed " + hero2.getName() + "'s defensive rating");
-                } else if(hero1 instanceof Thief) {
-                    hero1.Spell(hero2);
-                    player1AP.setText(hero1.getCurrentAP() + " AP");
-                    battleLog.setText(hero1.getName() + " decreased " + hero2.getName() + "'s health");
-                }
-            } else {
-                if (hero2 instanceof Warrior) {
-                    hero2.Spell(hero2);
-                    player2AP.setText(hero2.getCurrentAP() + " AP");
-                    battleLog.setText(hero2.getName() + " buffed their attack damage");
-                } else if(hero2 instanceof Mage) {
-                    hero2.Spell(hero1);
-                    player2AP.setText(hero2.getCurrentAP() + " AP");
-                    battleLog.setText(hero2.getName() + " debuffed " + hero1.getName() + "'s defensive rating");
-                } else if(hero1 instanceof Thief) {
-                    hero2.Spell(hero1);
-                    player2AP.setText(hero2.getCurrentAP() + " AP");
-                    battleLog.setText(hero2.getName() + " decreased " + hero1.getName() + "'s health");
-                }
-            }
-        }
-    }
-    */
-/*
-    private class Heal implements ActionListener {
-
-        public Heal() {}
-
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            if(player == Player.PLAYER1) {
-                hero1.Heal();
-                player1AP.setText(hero1.getCurrentAP() + " AP");
-                battleLog.setText(hero1.getName() + " healed themself");
-            } else {
-                hero2.Heal();
-                player2AP.setText(hero2.getCurrentAP() + " AP");
-                battleLog.setText(hero2.getName() + " healed themself");
-            }
-        }
-    }
-*/
-/*
-    private class EndTurn implements ActionListener {
-
-        public EndTurn() {}
-
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            if (player == Player.PLAYER1) {
-                hero1.setCurrentAP(hero1.getCurrentAP() + hero1.getTurnAP());
-                hero1.setSpellCooldown(hero1.getSpellCooldown() - 1);
-                player1AP.setText(hero1.getCurrentAP() + " AP");
-                if(hero1.getHealth() <= 0) {
-                    battleLog.setText(hero2.getName() + " won the game");
-                }
-                if(hero2.getHealth() <= 0) {
-                    battleLog.setText(hero1.getName() + " won the game");
-                }
-                player = Player.PLAYER2;
-            } else {
-                hero2.setCurrentAP(hero2.getCurrentAP() + hero2.getTurnAP());
-                hero1.setSpellCooldown(hero1.getSpellCooldown() - 1);
-                player2AP.setText(hero2.getCurrentAP() + " AP");
-                if(hero1.getHealth() <= 0) {
-                    battleLog.setText(hero2.getName() + " won the game");
-                }
-                if(hero2.getHealth() <= 0) {
-                    battleLog.setText(hero1.getName() + " won the game");
-                }
-                player = Player.PLAYER1;
-            }
-        }
-    }
-    */
 }

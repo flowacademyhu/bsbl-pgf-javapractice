@@ -22,7 +22,6 @@ public class CreateCharacter implements ActionListener {
     private JTextField constitutionNumber;
     private JTextField speedNumber;
     private JTextField perceptionNumber;
-    private JTextField characterField;
     private JTextField player1Stats;
     private JTextField player2Stats;
     private JTextField player1Name;
@@ -35,7 +34,7 @@ public class CreateCharacter implements ActionListener {
     public CreateCharacter(JTextField nameField, JRadioButton warrior, JRadioButton mage, JRadioButton thief,
                            JTextField strengthNumber, JTextField dexterityNumber, JTextField intelligenceNumber,
                            JTextField constitutionNumber, JTextField speedNumber, JTextField perceptionNumber,
-                           JTextField characterField, JTextField player1Stats, JTextField player2Stats, JTextField player1Name,
+                           JTextField player1Stats, JTextField player2Stats, JTextField player1Name,
                            JTextField player2Name, JTextField player1Health, JTextField player2Health, JTextField player1AP, JTextField player2AP) {
         this.nameField = nameField;
         this.warrior = warrior;
@@ -47,7 +46,6 @@ public class CreateCharacter implements ActionListener {
         this.constitutionNumber = constitutionNumber;
         this.speedNumber = speedNumber;
         this.perceptionNumber = perceptionNumber;
-        this.characterField = characterField;
         this.player1Stats = player1Stats;
         this.player2Stats = player2Stats;
         this.player1Name = player1Name;
@@ -75,7 +73,6 @@ public class CreateCharacter implements ActionListener {
                             Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
                             Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
                 }
-                characterField.setText(HeroRPG.hero1.toString());
                 HeroRPG.player = HeroRPG.Player.PLAYER2;
                 HeroRPG.spentAttributePoints = 0;
                 strengthNumber.setText("0");
@@ -99,7 +96,6 @@ public class CreateCharacter implements ActionListener {
                             Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
                             Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
                 }
-                characterField.setText(HeroRPG.hero2.toString());
                 HeroRPG.heroRPG.frame.setContentPane(HeroRPG.heroRPG.battle);
                 HeroRPG.heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 HeroRPG.heroRPG.frame.pack();

@@ -15,7 +15,7 @@ public abstract class Hero {
 
     public Hero(String name, int strength, int dexterity, int intelligence, int constitution, int speed, int perception) {
         this.name = name;
-        this.health = 100 + constitution * 10;
+        this.health = 50 + constitution * 5;
         this.offensiveRating = 0.5f + intelligence * 0.1f;
         this.defensiveRating = 0.5f + dexterity * 0.1f;
         this.startAP = (int)(4 + perception * 0.5f);

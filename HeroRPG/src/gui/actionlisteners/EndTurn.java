@@ -7,15 +7,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EndTurn implements ActionListener {
-
+    private JFrame frame;
     private JTextField player1AP;
     private JTextField player2AP;
     private JTextField battleLog;
+    private JTextField result;
 
-    public EndTurn(JTextField player1AP, JTextField player2AP, JTextField battleLog) {
+    public EndTurn(JFrame frame, JTextField player1AP, JTextField player2AP, JTextField battleLog, JTextField result) {
+        this.frame = frame;
         this.player1AP = player1AP;
         this.player2AP = player2AP;
         this.battleLog = battleLog;
+        this.result = result;
+    }
+
+    public void setPanel() {
+        HeroRPG.heroRPG.frame.setContentPane(HeroRPG.heroRPG.end);
+        HeroRPG.heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        HeroRPG.heroRPG.frame.pack();
+        HeroRPG.heroRPG.frame.setVisible(true);
     }
 
     @Override
@@ -26,9 +36,15 @@ public class EndTurn implements ActionListener {
             player1AP.setText(HeroRPG.hero1.getCurrentAP() + " AP");
             if(HeroRPG.hero1.getHealth() <= 0) {
                 battleLog.setText(HeroRPG.hero2.getName() + " won the game");
+                result.setText(HeroRPG.hero2.getName() + " controlled by Player 2 won the game!");
+                JOptionPane.showMessageDialog(frame, HeroRPG.hero1.getName() + " died!");
+                setPanel();
             }
             if(HeroRPG.hero2.getHealth() <= 0) {
                 battleLog.setText(HeroRPG.hero1.getName() + " won the game");
+                result.setText(HeroRPG.hero1.getName() + " controlled by Player 2 won the game!");
+                JOptionPane.showMessageDialog(frame, HeroRPG.hero2.getName() + " died!");
+                setPanel();
             }
             HeroRPG.player = HeroRPG.Player.PLAYER2;
         } else {
@@ -37,9 +53,15 @@ public class EndTurn implements ActionListener {
             player2AP.setText(HeroRPG.hero2.getCurrentAP() + " AP");
             if(HeroRPG.hero1.getHealth() <= 0) {
                 battleLog.setText(HeroRPG.hero2.getName() + " won the game");
+                result.setText(HeroRPG.hero2.getName() + " controlled by Player 2 won the game!");
+                JOptionPane.showMessageDialog(frame, HeroRPG.hero1.getName() + " died!");
+                setPanel();
             }
             if(HeroRPG.hero2.getHealth() <= 0) {
                 battleLog.setText(HeroRPG.hero1.getName() + " won the game");
+                result.setText(HeroRPG.hero1.getName() + " controlled by Player 2 won the game!");
+                JOptionPane.showMessageDialog(frame, HeroRPG.hero2.getName() + " died!");
+                setPanel();
             }
             HeroRPG.player = HeroRPG.Player.PLAYER1;
         }
