@@ -26,11 +26,11 @@ public abstract class Hero {
         spellCooldown = 0;
     }
 
-    public abstract void Attack(Hero hero);
+    public abstract String Attack(Hero hero);
 
-    public abstract void Spell(Hero hero);
+    public abstract String Spell(Hero hero);
 
-    public abstract void Heal();
+    public abstract String Heal();
 
     public String getName() {
         return name;

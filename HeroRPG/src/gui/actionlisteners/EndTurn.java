@@ -49,7 +49,7 @@ public class EndTurn implements ActionListener {
             HeroRPG.player = HeroRPG.Player.PLAYER2;
         } else {
             HeroRPG.hero2.setCurrentAP(HeroRPG.hero2.getCurrentAP() + HeroRPG.hero2.getTurnAP());
-            HeroRPG.hero1.setSpellCooldown(HeroRPG.hero1.getSpellCooldown() - 1);
+            HeroRPG.hero2.setSpellCooldown(HeroRPG.hero2.getSpellCooldown() - 1);
             player2AP.setText(HeroRPG.hero2.getCurrentAP() + " AP");
             if(HeroRPG.hero1.getHealth() <= 0) {
                 battleLog.setText(HeroRPG.hero2.getName() + " won the game");

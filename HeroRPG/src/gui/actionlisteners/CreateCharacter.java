@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CreateCharacter implements ActionListener {
+    private JTextField unspentPoints;
     private JTextField nameField;
     private JRadioButton warrior;
     private JRadioButton mage;
@@ -31,11 +32,12 @@ public class CreateCharacter implements ActionListener {
     private JTextField player1AP;
     private JTextField player2AP;
 
-    public CreateCharacter(JTextField nameField, JRadioButton warrior, JRadioButton mage, JRadioButton thief,
+    public CreateCharacter(JTextField unspentPoints, JTextField nameField, JRadioButton warrior, JRadioButton mage, JRadioButton thief,
                            JTextField strengthNumber, JTextField dexterityNumber, JTextField intelligenceNumber,
                            JTextField constitutionNumber, JTextField speedNumber, JTextField perceptionNumber,
                            JTextField player1Stats, JTextField player2Stats, JTextField player1Name,
                            JTextField player2Name, JTextField player1Health, JTextField player2Health, JTextField player1AP, JTextField player2AP) {
+        this.unspentPoints = unspentPoints;
         this.nameField = nameField;
         this.warrior = warrior;
         this.mage = mage;
@@ -82,6 +84,7 @@ public class CreateCharacter implements ActionListener {
                 speedNumber.setText("0");
                 perceptionNumber.setText("0");
                 nameField.setText("");
+                unspentPoints.setText("Unspent attribute points: " + String.valueOf(40 - HeroRPG.spentAttributePoints));
             } else {
                 if(warrior.isSelected()) {
                     HeroRPG.hero2 = new Warrior(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),

@@ -8,10 +8,12 @@ import gui.HeroRPG;
 public class DecreaseAttribute implements ActionListener {
     private int value;
     private JTextField field;
+    private JTextField unspentPoints;
 
-    public DecreaseAttribute(int value, JTextField field) {
+    public DecreaseAttribute(int value, JTextField field, JTextField unspentPoints) {
         this.value = value;
         this.field = field;
+        this.unspentPoints = unspentPoints;
     }
 
     @Override
@@ -21,6 +23,7 @@ public class DecreaseAttribute implements ActionListener {
             value--;
             field.setText(String.valueOf(value));
             HeroRPG.spentAttributePoints--;
+            unspentPoints.setText("Unspent attribute points: " + String.valueOf(40 - HeroRPG.spentAttributePoints));
         }
     }
 }

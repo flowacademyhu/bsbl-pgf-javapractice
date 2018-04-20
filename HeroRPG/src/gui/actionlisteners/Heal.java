@@ -25,15 +25,17 @@ public class Heal implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if(HeroRPG.player == HeroRPG.Player.PLAYER1) {
-            HeroRPG.hero1.Heal();
+            //HeroRPG.hero1.Heal();
+            battleLog.setText(HeroRPG.hero1.Heal());
             player1Health.setText(HeroRPG.hero1.getHealth() + " HP");
             player1AP.setText(HeroRPG.hero1.getCurrentAP() + " AP");
-            battleLog.setText(HeroRPG.hero1.getName() + " healed themself");
+            //battleLog.setText(HeroRPG.hero1.getName() + " healed themself");
         } else {
-            HeroRPG.hero2.Heal();
+            //HeroRPG.hero2.Heal();
+            battleLog.setText(HeroRPG.hero2.Heal());
             player2Health.setText(HeroRPG.hero2.getHealth() + " HP");
             player2AP.setText(HeroRPG.hero2.getCurrentAP() + " AP");
-            battleLog.setText(HeroRPG.hero2.getName() + " healed themself");
+            //battleLog.setText(HeroRPG.hero2.getName() + " healed themself");
         }
     }
 }

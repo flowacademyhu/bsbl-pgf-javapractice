@@ -24,15 +24,17 @@ public class Attack implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (HeroRPG.player == HeroRPG.Player.PLAYER1) {
-            HeroRPG.hero1.Attack(HeroRPG.hero2);
+            //HeroRPG.hero1.Attack(HeroRPG.hero2);
+            battleLog.setText(HeroRPG.hero1.Attack(HeroRPG.hero2));
             player2Health.setText(HeroRPG.hero2.getHealth() + " HP");
             player1AP.setText(HeroRPG.hero1.getCurrentAP() + " AP");
-            battleLog.setText(HeroRPG.hero1.getName() + " attacked " + HeroRPG.hero2.getName());
+            //battleLog.setText(HeroRPG.hero1.getName() + " attacked " + HeroRPG.hero2.getName());
         } else {
-            HeroRPG.hero2.Attack(HeroRPG.hero1);
+            //HeroRPG.hero2.Attack(HeroRPG.hero1);
+            battleLog.setText(HeroRPG.hero2.Attack(HeroRPG.hero1));
             player1Health.setText(HeroRPG.hero1.getHealth() + " HP");
             player2AP.setText(HeroRPG.hero2.getCurrentAP() + " AP");
-            battleLog.setText(HeroRPG.hero2.getName() + " attacked " + HeroRPG.hero1.getName());
+            //battleLog.setText(HeroRPG.hero2.getName() + " attacked " + HeroRPG.hero1.getName());
         }
     }
 }

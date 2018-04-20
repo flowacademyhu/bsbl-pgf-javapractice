@@ -17,6 +17,7 @@ public class HeroRPG {
 
     //Character creation panel
     private JLabel title1;
+    private JTextField unspentPoints;
     private JButton increaseStrength;
     private JButton increaseDexterity;
     private JButton increaseIntelligence;
@@ -39,7 +40,6 @@ public class HeroRPG {
     private JRadioButton mage;
     private JRadioButton thief;
     private ButtonGroup group = new ButtonGroup();
-
     private JTextField nameField;
     private JButton createCharacter;
 
@@ -66,7 +66,6 @@ public class HeroRPG {
     private JTextField result;
 
     public static int spentAttributePoints;
-
     public static Hero hero1;
     public static Hero hero2;
     public enum Player {PLAYER1, PLAYER2}
@@ -76,6 +75,7 @@ public class HeroRPG {
 
 
     public static void main(String[] args) {
+        heroRPG.unspentPoints.setEditable(false);
         heroRPG.strengthNumber.setEditable(false);
         heroRPG.dexterityNumber.setEditable(false);
         heroRPG.intelligenceNumber.setEditable(false);
@@ -91,24 +91,25 @@ public class HeroRPG {
         heroRPG.group.add(heroRPG.warrior);
         heroRPG.group.add(heroRPG.mage);
         heroRPG.group.add(heroRPG.thief);
+        heroRPG.unspentPoints.setText("Unspent attribute points: " + String.valueOf(40 - spentAttributePoints));
     }
 
     public HeroRPG() {
-        increaseStrength.addActionListener(new IncreaseAttribute(Integer.parseInt(strengthNumber.getText()), strengthNumber));
-        increaseDexterity.addActionListener(new IncreaseAttribute(Integer.parseInt(dexterityNumber.getText()), dexterityNumber));
-        increaseIntelligence.addActionListener(new IncreaseAttribute(Integer.parseInt(intelligenceNumber.getText()), intelligenceNumber));
-        increaseConstitution.addActionListener(new IncreaseAttribute(Integer.parseInt(constitutionNumber.getText()), constitutionNumber));
-        increaseSpeed.addActionListener(new IncreaseAttribute(Integer.parseInt(speedNumber.getText()), speedNumber));
-        increasePerception.addActionListener(new IncreaseAttribute(Integer.parseInt(perceptionNumber.getText()), perceptionNumber));
+        increaseStrength.addActionListener(new IncreaseAttribute(Integer.parseInt(strengthNumber.getText()), strengthNumber, unspentPoints));
+        increaseDexterity.addActionListener(new IncreaseAttribute(Integer.parseInt(dexterityNumber.getText()), dexterityNumber, unspentPoints));
+        increaseIntelligence.addActionListener(new IncreaseAttribute(Integer.parseInt(intelligenceNumber.getText()), intelligenceNumber, unspentPoints));
+        increaseConstitution.addActionListener(new IncreaseAttribute(Integer.parseInt(constitutionNumber.getText()), constitutionNumber, unspentPoints));
+        increaseSpeed.addActionListener(new IncreaseAttribute(Integer.parseInt(speedNumber.getText()), speedNumber, unspentPoints));
+        increasePerception.addActionListener(new IncreaseAttribute(Integer.parseInt(perceptionNumber.getText()), perceptionNumber, unspentPoints));
 
-        decreaseStrength.addActionListener(new DecreaseAttribute(Integer.parseInt(strengthNumber.getText()), strengthNumber));
-        decreaseDexterity.addActionListener(new DecreaseAttribute(Integer.parseInt(dexterityNumber.getText()), dexterityNumber));
-        decreaseIntelligence.addActionListener(new DecreaseAttribute(Integer.parseInt(intelligenceNumber.getText()), intelligenceNumber));
-        decreaseConstitution.addActionListener(new DecreaseAttribute(Integer.parseInt(constitutionNumber.getText()), constitutionNumber));
-        decreaseSpeed.addActionListener(new DecreaseAttribute(Integer.parseInt(speedNumber.getText()), speedNumber));
-        decreasePerception.addActionListener(new DecreaseAttribute(Integer.parseInt(perceptionNumber.getText()), perceptionNumber));
+        decreaseStrength.addActionListener(new DecreaseAttribute(Integer.parseInt(strengthNumber.getText()), strengthNumber, unspentPoints));
+        decreaseDexterity.addActionListener(new DecreaseAttribute(Integer.parseInt(dexterityNumber.getText()), dexterityNumber, unspentPoints));
+        decreaseIntelligence.addActionListener(new DecreaseAttribute(Integer.parseInt(intelligenceNumber.getText()), intelligenceNumber, unspentPoints));
+        decreaseConstitution.addActionListener(new DecreaseAttribute(Integer.parseInt(constitutionNumber.getText()), constitutionNumber, unspentPoints));
+        decreaseSpeed.addActionListener(new DecreaseAttribute(Integer.parseInt(speedNumber.getText()), speedNumber, unspentPoints));
+        decreasePerception.addActionListener(new DecreaseAttribute(Integer.parseInt(perceptionNumber.getText()), perceptionNumber, unspentPoints));
 
-        createCharacter.addActionListener(new CreateCharacter(nameField, warrior, mage, thief, strengthNumber, dexterityNumber, intelligenceNumber,
+        createCharacter.addActionListener(new CreateCharacter(unspentPoints, nameField, warrior, mage, thief, strengthNumber, dexterityNumber, intelligenceNumber,
                 constitutionNumber, speedNumber, perceptionNumber, player1Stats, player2Stats, player1Name, player2Name,
                 player1Health, player2Health, player1AP, player2AP));
 
