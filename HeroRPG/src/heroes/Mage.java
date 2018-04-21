@@ -45,7 +45,7 @@ public class Mage extends Hero {
             setSpellCooldown(3);
             System.out.println(getSpellCooldown());
             return getName() + " debuffed " + enemy.getName()  + "'s defensive rating,";
-        } else if(getCurrentAP() >= 6 && getSpellCooldown() > 0) {
+        } else if(getSpellCooldown() > 0) {
             System.out.println(getSpellCooldown());
             return getName() + "' spell is still in cooldown.";
         } else {

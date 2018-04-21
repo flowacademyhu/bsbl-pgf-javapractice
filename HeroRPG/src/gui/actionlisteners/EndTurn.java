@@ -11,14 +11,16 @@ public class EndTurn implements ActionListener {
     private JTextField player1AP;
     private JTextField player2AP;
     private JTextField battleLog;
-    private JTextField result;
+    private JLabel result;
+    private JLabel whosTurn;
 
-    public EndTurn(JFrame frame, JTextField player1AP, JTextField player2AP, JTextField battleLog, JTextField result) {
+    public EndTurn(JFrame frame, JTextField player1AP, JTextField player2AP, JTextField battleLog, JLabel result, JLabel whosTurn) {
         this.frame = frame;
         this.player1AP = player1AP;
         this.player2AP = player2AP;
         this.battleLog = battleLog;
         this.result = result;
+        this.whosTurn = whosTurn;
     }
 
     public void setPanel() {
@@ -32,7 +34,9 @@ public class EndTurn implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         if (HeroRPG.player == HeroRPG.Player.PLAYER1) {
             HeroRPG.hero1.setCurrentAP(HeroRPG.hero1.getCurrentAP() + HeroRPG.hero1.getTurnAP());
-            HeroRPG.hero1.setSpellCooldown(HeroRPG.hero1.getSpellCooldown() - 1);
+            if(HeroRPG.hero1.getSpellCooldown() > 0) {
+                HeroRPG.hero1.setSpellCooldown(HeroRPG.hero1.getSpellCooldown() - 1);
+            }
             player1AP.setText(HeroRPG.hero1.getCurrentAP() + " AP");
             if(HeroRPG.hero1.getHealth() <= 0) {
                 battleLog.setText(HeroRPG.hero2.getName() + " won the game");
@@ -46,10 +50,13 @@ public class EndTurn implements ActionListener {
                 JOptionPane.showMessageDialog(frame, HeroRPG.hero2.getName() + " died!");
                 setPanel();
             }
+            whosTurn.setText(HeroRPG.hero2.getName() + "'s turn");
             HeroRPG.player = HeroRPG.Player.PLAYER2;
         } else {
             HeroRPG.hero2.setCurrentAP(HeroRPG.hero2.getCurrentAP() + HeroRPG.hero2.getTurnAP());
-            HeroRPG.hero2.setSpellCooldown(HeroRPG.hero2.getSpellCooldown() - 1);
+            if(HeroRPG.hero2.getSpellCooldown() > 0) {
+                HeroRPG.hero2.setSpellCooldown(HeroRPG.hero2.getSpellCooldown() - 1);
+            }
             player2AP.setText(HeroRPG.hero2.getCurrentAP() + " AP");
             if(HeroRPG.hero1.getHealth() <= 0) {
                 battleLog.setText(HeroRPG.hero2.getName() + " won the game");
@@ -63,6 +70,7 @@ public class EndTurn implements ActionListener {
                 JOptionPane.showMessageDialog(frame, HeroRPG.hero2.getName() + " died!");
                 setPanel();
             }
+            whosTurn.setText(HeroRPG.hero1.getName() + "' turn");
             HeroRPG.player = HeroRPG.Player.PLAYER1;
         }
     }

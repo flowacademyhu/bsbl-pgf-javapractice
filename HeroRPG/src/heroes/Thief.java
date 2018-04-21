@@ -45,7 +45,7 @@ public class Thief extends Hero {
             setSpellCooldown(3);
             System.out.println(getSpellCooldown());
             return getName() + " poisoned " + enemy.getName()  + " for 15 damage.";
-        } else if(getCurrentAP() >= 6 && getSpellCooldown() > 0) {
+        } else if(getSpellCooldown() > 0) {
             System.out.println(getSpellCooldown());
             return getName() + "' spell is still in cooldown.";
         } else {

@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CreateCharacter implements ActionListener {
+    private JFrame frame;
     private JTextField unspentPoints;
     private JTextField nameField;
     private JRadioButton warrior;
@@ -25,18 +26,21 @@ public class CreateCharacter implements ActionListener {
     private JTextField perceptionNumber;
     private JTextField player1Stats;
     private JTextField player2Stats;
+    private JLabel whosTurn;
     private JTextField player1Name;
     private JTextField player2Name;
     private JTextField player1Health;
     private JTextField player2Health;
     private JTextField player1AP;
     private JTextField player2AP;
+    private JLabel whichPlayer;
 
-    public CreateCharacter(JTextField unspentPoints, JTextField nameField, JRadioButton warrior, JRadioButton mage, JRadioButton thief,
+    public CreateCharacter(JFrame frame, JTextField unspentPoints, JTextField nameField, JRadioButton warrior, JRadioButton mage, JRadioButton thief,
                            JTextField strengthNumber, JTextField dexterityNumber, JTextField intelligenceNumber,
                            JTextField constitutionNumber, JTextField speedNumber, JTextField perceptionNumber,
-                           JTextField player1Stats, JTextField player2Stats, JTextField player1Name,
-                           JTextField player2Name, JTextField player1Health, JTextField player2Health, JTextField player1AP, JTextField player2AP) {
+                           JTextField player1Stats, JTextField player2Stats, JLabel whosTurn, JTextField player1Name,
+                           JTextField player2Name, JTextField player1Health, JTextField player2Health, JTextField player1AP, JTextField player2AP, JLabel whichPlayer) {
+        this.frame = frame;
         this.unspentPoints = unspentPoints;
         this.nameField = nameField;
         this.warrior = warrior;
@@ -50,17 +54,19 @@ public class CreateCharacter implements ActionListener {
         this.perceptionNumber = perceptionNumber;
         this.player1Stats = player1Stats;
         this.player2Stats = player2Stats;
+        this.whosTurn = whosTurn;
         this.player1Name = player1Name;
         this.player2Name = player2Name;
         this.player1Health = player1Health;
         this.player2Health = player2Health;
         this.player1AP = player1AP;
         this.player2AP = player2AP;
+        this.whichPlayer = whichPlayer;
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (HeroRPG.spentAttributePoints == 40 && !nameField.equals("")) {
+        if (HeroRPG.spentAttributePoints == 40 && !nameField.getText().equals("")) {
             if (HeroRPG.player == HeroRPG.Player.PLAYER1) {
                 if(warrior.isSelected()) {
                     HeroRPG.hero1 = new Warrior(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
@@ -85,6 +91,7 @@ public class CreateCharacter implements ActionListener {
                 perceptionNumber.setText("0");
                 nameField.setText("");
                 unspentPoints.setText("Unspent attribute points: " + String.valueOf(40 - HeroRPG.spentAttributePoints));
+                whichPlayer.setText("Player 2's character creator");
             } else {
                 if(warrior.isSelected()) {
                     HeroRPG.hero2 = new Warrior(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
@@ -115,8 +122,13 @@ public class CreateCharacter implements ActionListener {
                 // If they are equal player1 gets to be first
                 if (HeroRPG.hero1.getOffensiveRating() >= HeroRPG.hero2.getOffensiveRating()) {
                     HeroRPG.player = HeroRPG.Player.PLAYER1;
+                    whosTurn.setText(HeroRPG.hero1.getName() + "'s turn");
+                } else {
+                    whosTurn.setText(HeroRPG.hero2.getName() + "'s turn");
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(frame, "Your character is not ready to be created.");
         }
     }
 }
