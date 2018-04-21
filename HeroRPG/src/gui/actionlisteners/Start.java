@@ -19,7 +19,6 @@ public class Start implements ActionListener {
         heroRPG.frame.setContentPane(heroRPG.characterCreator);
         heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         heroRPG.frame.pack();
-        heroRPG.frame.setMinimumSize(new Dimension(400, 500));
         whichPlayer.setText("Player 1's character creator");
     }
 }

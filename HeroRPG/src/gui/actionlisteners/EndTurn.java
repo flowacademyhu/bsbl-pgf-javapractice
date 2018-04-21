@@ -14,8 +14,6 @@ public class EndTurn implements ActionListener {
     private JTextField battleLog;
     private JLabel result;
     private JLabel whosTurn;
-    private JTextField player1Stats;
-    private JTextField player2Stats;
     private JTextField player1Name;
     private JTextField player2Name;
     private JTextField player1Health;
@@ -24,17 +22,14 @@ public class EndTurn implements ActionListener {
     private JLabel player2Wins;
 
     public EndTurn(JFrame frame, JTextField player1AP, JTextField player2AP, JTextField battleLog,
-                   JLabel result, JLabel whosTurn, JTextField player1Stats, JTextField player2Stats,
-                   JTextField player1Name, JTextField player2Name, JTextField player1Health, JTextField player2Health,
-                   JLabel player1Wins, JLabel player2Wins) {
+                   JLabel result, JLabel whosTurn, JTextField player1Name, JTextField player2Name,
+                   JTextField player1Health, JTextField player2Health, JLabel player1Wins, JLabel player2Wins) {
         this.frame = frame;
         this.player1AP = player1AP;
         this.player2AP = player2AP;
         this.battleLog = battleLog;
         this.result = result;
         this.whosTurn = whosTurn;
-        this.player1Stats = player1Stats;
-        this.player2Stats = player2Stats;
         this.player1Name = player1Name;
         this.player2Name = player2Name;
         this.player1Health = player1Health;
@@ -73,8 +68,6 @@ public class EndTurn implements ActionListener {
     }
 
     void resetBattleInterface() {
-        player1Stats.setText(HeroRPG.hero1.toString());
-        player2Stats.setText(HeroRPG.hero2.toString());
         player1Name.setText(HeroRPG.hero1.getName());
         player2Name.setText(HeroRPG.hero2.getName());
         player1Health.setText(HeroRPG.hero1.getHealth() + " HP");

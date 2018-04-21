@@ -60,8 +60,6 @@ public class HeroRPG {
 
     //Battle panel
     private JLabel title2;
-    private JTextField player1Stats;
-    private JTextField player2Stats;
     private JTextField player1Name;
     private JTextField player2Name;
     private JTextField player1Health;
@@ -76,6 +74,8 @@ public class HeroRPG {
     private JTextField battleLog;
     private JLabel player1Wins;
     private JLabel player2Wins;
+    private JLabel player1Pic;
+    private JLabel player2Pic;
 
     //End panel
     private JLabel title3;
@@ -99,6 +99,7 @@ public class HeroRPG {
     private JLabel thiefSpell;
     private JButton returnButton;
     private JButton instructionsButton;
+    private JLabel logLabeé;
 
     public static int spentAttributePoints;
     public static Hero hero1;
@@ -130,10 +131,16 @@ public class HeroRPG {
         heroRPG.constitutionNumber.setEditable(false);
         heroRPG.speedNumber.setEditable(false);
         heroRPG.perceptionNumber.setEditable(false);
+        heroRPG.player1Name.setEditable(false);
+        heroRPG.player2Name.setEditable(false);
+        heroRPG.player1Health.setEditable(false);
+        heroRPG.player2Health.setEditable(false);
+        heroRPG.player1AP.setEditable(false);
+        heroRPG.player2AP.setEditable(false);
+        heroRPG.battleLog.setEditable(false);
         heroRPG.frame.setContentPane(heroRPG.titleScreen);
         heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        heroRPG.frame.pack();
-        heroRPG.frame.setMinimumSize(new Dimension(500, 600));
+        heroRPG.frame.setMinimumSize(new Dimension(500, 700));
         heroRPG.frame.setVisible(true);
         heroRPG.group.add(heroRPG.warrior);
         heroRPG.group.add(heroRPG.mage);
@@ -141,8 +148,8 @@ public class HeroRPG {
         heroRPG.group.setSelected(heroRPG.warrior.getModel(), true);
         heroRPG.unspentPoints.setText("Unspent attribute points: " + String.valueOf(40 - spentAttributePoints));
         heroRPG.renderInstructions();
-        heroRPG.player1Wins.setText("Rounds won " + hero1Wins);
-        heroRPG.player2Wins.setText("Rounds won " + hero2Wins);
+        heroRPG.player1Wins.setText("Rounds won: " + hero1Wins);
+        heroRPG.player2Wins.setText("Rounds won: " + hero2Wins);
     }
 
     public void setTitle(JLabel label, String path) {
@@ -190,14 +197,14 @@ public class HeroRPG {
         decreasePerception.addActionListener(new DecreaseAttribute(Integer.parseInt(perceptionNumber.getText()), perceptionNumber, unspentPoints));
 
         createCharacter.addActionListener(new CreateCharacter(frame, unspentPoints, nameField, warrior, mage, thief, strengthNumber, dexterityNumber, intelligenceNumber,
-                constitutionNumber, speedNumber, perceptionNumber, player1Stats, player2Stats, whosTurn, player1Name, player2Name,
-                player1Health, player2Health, player1AP, player2AP, whichPlayer));
+                constitutionNumber, speedNumber, perceptionNumber, whosTurn, player1Name, player2Name,
+                player1Health, player2Health, player1AP, player2AP, whichPlayer, player1Pic, player2Pic));
 
         attackButton.addActionListener(new Attack(player1Health, player2Health, player1AP, player2AP, battleLog));
         spellButton.addActionListener(new UseSpell(player1Health, player2Health, player1AP, player2AP, battleLog));
         healButton.addActionListener(new Heal(player1Health, player2Health, player1AP, player2AP, battleLog));
-        endTurn.addActionListener(new EndTurn(frame, player1AP, player2AP, battleLog, result, whosTurn, player1Stats,
-                player2Stats, player1Name, player2Name, player1Health, player2Health, player1Wins, player2Wins));
+        endTurn.addActionListener(new EndTurn(frame, player1AP, player2AP, battleLog, result, whosTurn,
+                player1Name, player2Name, player1Health, player2Health, player1Wins, player2Wins));
 
         restartButton.addActionListener(new Restart(nameField, strengthNumber, dexterityNumber, intelligenceNumber,
                 constitutionNumber, speedNumber, perceptionNumber, battleLog, whichPlayer, unspentPoints));

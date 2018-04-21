@@ -7,9 +7,13 @@ import heroes.Thief;
 import heroes.Warrior;
 import gui.HeroRPG;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class CreateCharacter implements ActionListener {
     private JFrame frame;
@@ -24,8 +28,6 @@ public class CreateCharacter implements ActionListener {
     private JTextField constitutionNumber;
     private JTextField speedNumber;
     private JTextField perceptionNumber;
-    private JTextField player1Stats;
-    private JTextField player2Stats;
     private JLabel whosTurn;
     private JTextField player1Name;
     private JTextField player2Name;
@@ -34,12 +36,14 @@ public class CreateCharacter implements ActionListener {
     private JTextField player1AP;
     private JTextField player2AP;
     private JLabel whichPlayer;
+    private JLabel player1Pic;
+    private JLabel player2Pic;
 
     public CreateCharacter(JFrame frame, JTextField unspentPoints, JTextField nameField, JRadioButton warrior, JRadioButton mage, JRadioButton thief,
                            JTextField strengthNumber, JTextField dexterityNumber, JTextField intelligenceNumber,
-                           JTextField constitutionNumber, JTextField speedNumber, JTextField perceptionNumber,
-                           JTextField player1Stats, JTextField player2Stats, JLabel whosTurn, JTextField player1Name,
-                           JTextField player2Name, JTextField player1Health, JTextField player2Health, JTextField player1AP, JTextField player2AP, JLabel whichPlayer) {
+                           JTextField constitutionNumber, JTextField speedNumber, JTextField perceptionNumber, JLabel whosTurn, JTextField player1Name,
+                           JTextField player2Name, JTextField player1Health, JTextField player2Health,
+                           JTextField player1AP, JTextField player2AP, JLabel whichPlayer, JLabel player1Pic, JLabel player2Pic) {
         this.frame = frame;
         this.unspentPoints = unspentPoints;
         this.nameField = nameField;
@@ -52,8 +56,6 @@ public class CreateCharacter implements ActionListener {
         this.constitutionNumber = constitutionNumber;
         this.speedNumber = speedNumber;
         this.perceptionNumber = perceptionNumber;
-        this.player1Stats = player1Stats;
-        this.player2Stats = player2Stats;
         this.whosTurn = whosTurn;
         this.player1Name = player1Name;
         this.player2Name = player2Name;
@@ -62,6 +64,8 @@ public class CreateCharacter implements ActionListener {
         this.player1AP = player1AP;
         this.player2AP = player2AP;
         this.whichPlayer = whichPlayer;
+        this.player1Pic = player1Pic;
+        this.player2Pic = player2Pic;
     }
 
     public void storeStats(Hero hero) {
@@ -88,6 +92,17 @@ public class CreateCharacter implements ActionListener {
         }
     }
 
+    public void setAvatar(JLabel label, String path) {
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new File(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ImageIcon icon = new ImageIcon(image);
+        label.setIcon(icon);
+    }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (HeroRPG.spentAttributePoints == 40 && !nameField.getText().equals("")) {
@@ -96,14 +111,17 @@ public class CreateCharacter implements ActionListener {
                     HeroRPG.hero1 = new Warrior(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
                             Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
                             Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
+                    setAvatar(player1Pic, "./src/assets/sword1.png");
                 } else if(mage.isSelected()) {
                     HeroRPG.hero1 = new Mage(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
                             Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
                             Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
+                    setAvatar(player1Pic, "./src/assets/staff1.png");
                 } else {
                     HeroRPG.hero1 = new Thief(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
                             Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
                             Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
+                    setAvatar(player1Pic, "./src/assets/bow1.png");
                 }
                 storeStats(HeroRPG.hero1);
                 HeroRPG.player = HeroRPG.Player.PLAYER2;
@@ -122,22 +140,23 @@ public class CreateCharacter implements ActionListener {
                     HeroRPG.hero2 = new Warrior(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
                             Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
                             Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
+                    setAvatar(player2Pic, "./src/assets/sword2.png");
                 } else if(mage.isSelected()) {
                     HeroRPG.hero2 = new Mage(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
                             Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
                             Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
+                    setAvatar(player2Pic, "./src/assets/staff2.png");
                 } else {
                     HeroRPG.hero2 = new Thief(nameField.getText(), Integer.parseInt(strengthNumber.getText()), Integer.parseInt(dexterityNumber.getText()),
                             Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
                             Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
+                    setAvatar(player2Pic, "./src/assets/bow2.png");
                 }
                 storeStats(HeroRPG.hero2);
                 HeroRPG.heroRPG.frame.setContentPane(HeroRPG.heroRPG.battle);
                 HeroRPG.heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 HeroRPG.heroRPG.frame.pack();
                 HeroRPG.heroRPG.frame.setVisible(true);
-                player1Stats.setText(HeroRPG.hero1.toString());
-                player2Stats.setText(HeroRPG.hero2.toString());
                 player1Name.setText(HeroRPG.hero1.getName());
                 player2Name.setText(HeroRPG.hero2.getName());
                 player1Health.setText(HeroRPG.hero1.getHealth() + " HP");
