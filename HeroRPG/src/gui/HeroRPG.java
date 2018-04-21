@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import gui.actionlisteners.*;
 import heroes.*;
@@ -20,6 +21,7 @@ public class HeroRPG {
     public JPanel characterCreator;
     public JPanel battle;
     public JPanel end;
+    public JPanel instructions;
 
     //Title panel
     private JLabel mainTitle;
@@ -72,6 +74,8 @@ public class HeroRPG {
     private JButton healButton;
     private JButton endTurn;
     private JTextField battleLog;
+    private JLabel player1Wins;
+    private JLabel player2Wins;
 
     //End panel
     private JLabel title3;
@@ -79,10 +83,30 @@ public class HeroRPG {
     private JButton exitButton;
     private JLabel result;
 
+    //Instructions panel
+    private JLabel title4;
+    private JLabel instructionsLabel;
+    private JLabel attributes;
+    private JLabel strengthDesc;
+    private JLabel dexterityDesc;
+    private JLabel intelligenceDesc;
+    private JLabel constitutionDesc;
+    private JLabel speedDesc;
+    private JLabel perceptionDesc;
+    private JLabel classSpells;
+    private JLabel warriorSpell;
+    private JLabel mageSpell;
+    private JLabel thiefSpell;
+    private JButton returnButton;
+    private JButton instructionsButton;
 
     public static int spentAttributePoints;
     public static Hero hero1;
     public static Hero hero2;
+    public static int hero1Wins;
+    public static int hero2Wins;
+    public static HashMap<String, Object> hero1Stats = new HashMap();
+    public static HashMap<String, Object> hero2Stats = new HashMap();
     public enum Player {PLAYER1, PLAYER2}
     public static Player player = Player.PLAYER1;
 
@@ -98,6 +122,7 @@ public class HeroRPG {
         heroRPG.setTitle(heroRPG.title1, "./src/assets/hero_title2.png");
         heroRPG.setTitle(heroRPG.title2, "./src/assets/hero_title2.png");
         heroRPG.setTitle(heroRPG.title3, "./src/assets/hero_title2.png");
+        heroRPG.setTitle(heroRPG.title4, "./src/assets/hero_title2.png");
         heroRPG.unspentPoints.setEditable(false);
         heroRPG.strengthNumber.setEditable(false);
         heroRPG.dexterityNumber.setEditable(false);
@@ -108,13 +133,16 @@ public class HeroRPG {
         heroRPG.frame.setContentPane(heroRPG.titleScreen);
         heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         heroRPG.frame.pack();
-        heroRPG.frame.setMinimumSize(new Dimension(400, 500));
+        heroRPG.frame.setMinimumSize(new Dimension(500, 600));
         heroRPG.frame.setVisible(true);
         heroRPG.group.add(heroRPG.warrior);
         heroRPG.group.add(heroRPG.mage);
         heroRPG.group.add(heroRPG.thief);
         heroRPG.group.setSelected(heroRPG.warrior.getModel(), true);
         heroRPG.unspentPoints.setText("Unspent attribute points: " + String.valueOf(40 - spentAttributePoints));
+        heroRPG.renderInstructions();
+        heroRPG.player1Wins.setText("Rounds won " + hero1Wins);
+        heroRPG.player2Wins.setText("Rounds won " + hero2Wins);
     }
 
     public void setTitle(JLabel label, String path) {
@@ -128,9 +156,24 @@ public class HeroRPG {
         label.setIcon(icon);
     }
 
+    public void renderInstructions() {
+        heroRPG.strengthDesc.setText("- Strength: determines attack damage");
+        heroRPG.dexterityDesc.setText("- Dexterity: determines defensive rating");
+        heroRPG.intelligenceDesc.setText("- Intelligence: determines offensive rating and which player starts the game");
+        heroRPG.constitutionDesc.setText("- Constitution: determines health");
+        heroRPG.speedDesc.setText("- Speed: determines turn action points regeneration");
+        heroRPG.perceptionDesc.setText("- Perception: determines start action points and critical hit chance");
+        heroRPG.warriorSpell.setText("- Warrior: buffs attack damage");
+        heroRPG.mageSpell.setText("- Mage: debuffs enemy's defensive rating");
+        heroRPG.thiefSpell.setText("- Thief: poisons the enemy");
+    }
+
     public HeroRPG() {
         startGame.addActionListener(new Start(whichPlayer));
+        instructionsButton.addActionListener(new Instructions());
         exitGame.addActionListener(new Exit());
+
+        returnButton.addActionListener(new Return());
 
         increaseStrength.addActionListener(new IncreaseAttribute(Integer.parseInt(strengthNumber.getText()), strengthNumber, unspentPoints));
         increaseDexterity.addActionListener(new IncreaseAttribute(Integer.parseInt(dexterityNumber.getText()), dexterityNumber, unspentPoints));
@@ -153,7 +196,8 @@ public class HeroRPG {
         attackButton.addActionListener(new Attack(player1Health, player2Health, player1AP, player2AP, battleLog));
         spellButton.addActionListener(new UseSpell(player1Health, player2Health, player1AP, player2AP, battleLog));
         healButton.addActionListener(new Heal(player1Health, player2Health, player1AP, player2AP, battleLog));
-        endTurn.addActionListener(new EndTurn(frame, player1AP, player2AP, battleLog, result, whosTurn));
+        endTurn.addActionListener(new EndTurn(frame, player1AP, player2AP, battleLog, result, whosTurn, player1Stats,
+                player2Stats, player1Name, player2Name, player1Health, player2Health, player1Wins, player2Wins));
 
         restartButton.addActionListener(new Restart(nameField, strengthNumber, dexterityNumber, intelligenceNumber,
                 constitutionNumber, speedNumber, perceptionNumber, battleLog, whichPlayer, unspentPoints));

@@ -64,6 +64,30 @@ public class CreateCharacter implements ActionListener {
         this.whichPlayer = whichPlayer;
     }
 
+    public void storeStats(Hero hero) {
+        if(HeroRPG.player == HeroRPG.Player.PLAYER1) {
+            HeroRPG.hero1Stats.put("health", hero.getHealth());
+            HeroRPG.hero1Stats.put("offensiveRating", hero.getOffensiveRating());
+            HeroRPG.hero1Stats.put("defensiveRating", hero.getDefensiveRating());
+            HeroRPG.hero1Stats.put("startAP", hero.getStartAP());
+            HeroRPG.hero1Stats.put("turnAP", hero.getTurnAP());
+            HeroRPG.hero1Stats.put("criticalChance", hero.getCriticalChance());
+            HeroRPG.hero1Stats.put("damageModifier", hero.getDamageModifier());
+            HeroRPG.hero1Stats.put("currentAP", hero.getStartAP());
+            HeroRPG.hero1Stats.put("spellCooldown", 0);
+        } else {
+            HeroRPG.hero2Stats.put("health", hero.getHealth());
+            HeroRPG.hero2Stats.put("offensiveRating", hero.getOffensiveRating());
+            HeroRPG.hero2Stats.put("defensiveRating", hero.getDefensiveRating());
+            HeroRPG.hero2Stats.put("startAP", hero.getStartAP());
+            HeroRPG.hero2Stats.put("turnAP", hero.getTurnAP());
+            HeroRPG.hero2Stats.put("criticalChance", hero.getCriticalChance());
+            HeroRPG.hero2Stats.put("damageModifier", hero.getDamageModifier());
+            HeroRPG.hero2Stats.put("currentAP", hero.getStartAP());
+            HeroRPG.hero2Stats.put("spellCooldown", 0);
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (HeroRPG.spentAttributePoints == 40 && !nameField.getText().equals("")) {
@@ -81,6 +105,7 @@ public class CreateCharacter implements ActionListener {
                             Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
                             Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
                 }
+                storeStats(HeroRPG.hero1);
                 HeroRPG.player = HeroRPG.Player.PLAYER2;
                 HeroRPG.spentAttributePoints = 0;
                 strengthNumber.setText("0");
@@ -106,6 +131,7 @@ public class CreateCharacter implements ActionListener {
                             Integer.parseInt(intelligenceNumber.getText()), Integer.parseInt(constitutionNumber.getText()),
                             Integer.parseInt(speedNumber.getText()), Integer.parseInt(perceptionNumber.getText()));
                 }
+                storeStats(HeroRPG.hero2);
                 HeroRPG.heroRPG.frame.setContentPane(HeroRPG.heroRPG.battle);
                 HeroRPG.heroRPG.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 HeroRPG.heroRPG.frame.pack();
