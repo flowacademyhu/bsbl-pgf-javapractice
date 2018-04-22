@@ -47,7 +47,7 @@ public class Mage extends Hero {
             return getName() + " debuffed " + enemy.getName()  + "'s defensive rating,";
         } else if(getSpellCooldown() > 0) {
             System.out.println(getSpellCooldown());
-            return getName() + "' spell is still in cooldown.";
+            return getName() + "'s spell is still in cooldown.";
         } else {
             System.out.println(getSpellCooldown());
             System.out.println("You don't have enough action points to perform this action.");

@@ -40,14 +40,14 @@ public class Thief extends Hero {
         if(getCurrentAP() >= 6 && getSpellCooldown() == 0) {
             setCurrentAP(getCurrentAP() - 6);
             // Does -15 HP worth of damage to the enemy
-            enemy.setHealth(getHealth() - 15);
+            enemy.setHealth(enemy.getHealth() - 15);
             // Can't use spell for the next 2 turns
             setSpellCooldown(3);
             System.out.println(getSpellCooldown());
             return getName() + " poisoned " + enemy.getName()  + " for 15 damage.";
         } else if(getSpellCooldown() > 0) {
             System.out.println(getSpellCooldown());
-            return getName() + "' spell is still in cooldown.";
+            return getName() + "'s spell is still in cooldown.";
         } else {
             System.out.println(getSpellCooldown());
             System.out.println("You don't have enough action points to perform this action.");
