@@ -80,7 +80,8 @@ public class ArticleParser {
             Statement statement = connection.createStatement();
             for(int i = 0; i < urls.size(); i++) {
                 Document doc = parseUrl(urls.get(i));
-                statement.executeUpdate("insert into articles (title, content) values ('" + doc.title() + "', '" + doc.body().getElementsByClass("cikk-torzs").text().replace("'", "") + "');");
+                // TODO: escape apostrophes
+                statement.executeUpdate("insert into articles (title, content) values ('" + doc.title() + "', '" + doc.body().getElementsByClass("cikk-torzs").text().replace("'", "\\'") + "');");
             }
             connection.close();
         } catch (SQLException e) {
