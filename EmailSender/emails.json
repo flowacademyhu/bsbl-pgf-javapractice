@@ -1,0 +1,19 @@
+{
+  "mails":[
+    {
+      "emailAddress":"gergely.papp@flowacademy.hu",
+      "subject":"Test",
+      "content":"this is my first test"
+    },
+    {
+      "emailAddress":"gergely.papp@flowacademy.hu",
+      "subject":"Test2",
+      "content":"this is my second test"
+    },
+    {
+      "emailAddress":"gergely.papp@flowacademy.hu",
+      "subject":"Test3",
+      "content":"this is my third test"
+    }
+  ]
+}
