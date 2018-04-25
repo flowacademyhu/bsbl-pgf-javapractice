@@ -9,8 +9,8 @@ public final class TwitterOperations {
         Credentials credentials = parseCredentials.read();
         PostTweet postTweet = new PostTweet();
         ParseTimeLine parseTimeline = new ParseTimeLine();
-        ConfigurationBuilder cb = new ConfigurationBuilder();
 
+        ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey(credentials.getConsumerKey())
                 .setOAuthConsumerSecret(credentials.getConsumerSecret())
