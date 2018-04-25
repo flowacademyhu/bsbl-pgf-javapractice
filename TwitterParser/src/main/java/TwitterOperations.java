@@ -10,7 +10,7 @@ public final class TwitterOperations {
         PostTweet postTweet = new PostTweet();
         ParseTimeLine parseTimeline = new ParseTimeLine();
         ConfigurationBuilder cb = new ConfigurationBuilder();
-        
+
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey(credentials.getConsumerKey())
                 .setOAuthConsumerSecret(credentials.getConsumerSecret())
