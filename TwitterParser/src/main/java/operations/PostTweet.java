@@ -12,8 +12,9 @@ import java.io.IOException;
 
 public class PostTweet {
 
-    public void createTweet(String tweetPath, TwitterFactory tf){
+    public Status createTweet(String tweetPath, TwitterFactory tf){
         Twitter twitter = tf.getInstance();
+        Status status = null;
         StringBuilder tweet = new StringBuilder();
         BufferedReader reader = null;
         try {
@@ -34,9 +35,10 @@ public class PostTweet {
             }
         }
         try {
-            Status status = twitter.updateStatus(tweet.toString());
+            status = twitter.updateStatus(tweet.toString());
         } catch (TwitterException e) {
             e.printStackTrace();
         }
+        return status;
     }
 }

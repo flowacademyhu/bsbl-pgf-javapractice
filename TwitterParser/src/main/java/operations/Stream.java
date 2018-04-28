@@ -1,15 +1,12 @@
 package operations;
 
-import tweets.TweetsToDB;
 import twitter4j.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.TreeSet;
 
 public class Stream {
 
-    public void stream(TwitterStream twitterStream, String filter) {
+    public void stream(TwitterStream twitterStream, String filter, boolean insertIntoDB) {
         ParseList parseList = new ParseList();
         ArrayList<String> dirtyWords = parseList.filteredWords();
         twitterStream.addListener(new StatusListener() {
@@ -21,7 +18,9 @@ public class Stream {
                     System.out.println("SPAM");
                 } else {
                     System.out.println(tweetNumber + " @" + status.getUser().getScreenName() + " - " + status.getText());
-                    //tweetsToDB.storeTweets(status);
+                    if(insertIntoDB) {
+                        tweetsToDB.storeTweets(status);
+                    }
                 }
                 tweetNumber++;
             }
