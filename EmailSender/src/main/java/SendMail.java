@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.AddressException;
@@ -17,9 +19,12 @@ public class SendMail {
     static MimeMessage generateMailMessage;
 
     public static void main(String[] args) throws IOException, MessagingException {
-        SendMail sendMail = new SendMail();
-        Mails mails = sendMail.read();
-        sendMail.generateAndSendEmail(mails);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 15);
+        calendar.set(Calendar.MINUTE, 57);
+        calendar.set(Calendar.SECOND, 0);
+        Date time = calendar.getTime();
+        TimedEmail timedEmail = new TimedEmail(time);
     }
 
     public void generateAndSendEmail(Mails mails) throws MessagingException {

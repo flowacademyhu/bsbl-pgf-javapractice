@@ -3,17 +3,17 @@
     {
       "emailAddress":"gergely.papp@flowacademy.hu",
       "subject":"Test",
-      "content":"this is my first test"
+      "content":"timed email number 1"
     },
     {
       "emailAddress":"gergely.papp@flowacademy.hu",
       "subject":"Test2",
-      "content":"this is my second test"
+      "content":"timed email number 2"
     },
     {
       "emailAddress":"gergely.papp@flowacademy.hu",
       "subject":"Test3",
-      "content":"this is my third test"
+      "content":"timed email number 3"
     }
   ]
 }
