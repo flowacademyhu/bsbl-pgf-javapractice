@@ -24,6 +24,6 @@ public class Textbook extends Book {
 
     @Override
     public String toString() {
-        return "Textbook Subject: " + subject + " " + super.toString();
+        return "Textbook, Subject: " + subject + " " + super.toString();
     }
 }

@@ -5,58 +5,132 @@ import book.*;
 
 public class Shelf {
 
-    static ArrayList<Book> bookArray = new ArrayList<Book>();
-    
+    private String[] arguments;
+    private static ArrayList<Book> bookArray = new ArrayList<>();
+    private int i;
+
     public static void main(String[] args) {
-        putOnShelf(args, bookArray);
-
-        for(int i = 0; i < bookArray.size(); i++) {
-            System.out.println(bookArray.get(i));
-        }
-
-        System.out.println("Number of novels: " + Novel.getBookCount());
+        Shelf shelf = new Shelf();
+        shelf.setArgs(args);
+        shelf.putOnShelf();
+        shelf.printBooks();
     }
 
-    public static void putOnShelf(String[] args, ArrayList<Book> bookArray) {
+    private void printBooks() {
+        for (Book book : bookArray) {
+            System.out.println(book);
+        }
+    }
 
-        String[] arguments;
+    private void setArgs(String[] array) {
+        arguments = array;
+    }
 
-        for(int i = 0; i < args.length; i++) {
-            if(args[i].equals("Textbook")) {
-                if(i == (args.length - 1)) {
-                    Textbook tb = new Textbook();
-                    bookArray.add(tb);
-                    break;
-                }
 
-                arguments = args[i+1].split(",");
-                if(arguments.length == 5) {
-                    Textbook tb = new Textbook(arguments[0], arguments[1], arguments[2],
-                            Integer.parseInt(arguments[3]), arguments[4]);
-                    bookArray.add(tb);
-                    i++;
-                } else {
-                    Textbook tb = new Textbook();
-                    bookArray.add(tb);
-                }
-            } else if ((args[i].equals("Novel"))) {
-                if(i == (args.length - 1)) {
-                    Novel n = new Novel();
-                    bookArray.add(n);
-                    break;
-                }
+    private boolean isTextbook(){
+        return arguments[i].equals("Textbook");
+    }
 
-                arguments = args[i+1].split(",");
-                if (arguments.length == 5) {
-                    Novel n = new Novel(arguments[0], arguments[1], arguments[2],
-                            Integer.parseInt(arguments[3]), arguments[4]);
-                    bookArray.add(n);
-                    i++;
-                } else {
-                    Novel n = new Novel();
-                    bookArray.add(n);
-                }
+    private boolean isNovel(){
+        return arguments[i].equals("Novel");
+    }
+
+    private HashMap<String, Object> getBookOptions(String[] bookAttributes) {
+        HashMap<String, Object> bookMap = new HashMap<>();
+        bookMap.put("author", bookAttributes[0]);
+        bookMap.put("title", bookAttributes[1]);
+        bookMap.put("publisher", bookAttributes[2]);
+        bookMap.put("datePublished", Integer.parseInt(bookAttributes[3]));
+        if(isTextbook()) {
+            bookMap.put("subject", bookAttributes[4]);
+        } else {
+            bookMap.put("genre", bookAttributes[4]);
+        }
+        return bookMap;
+    }
+
+    private void createTextbook(HashMap<String, Object> bookAttributes) {
+        Textbook textbook = new Textbook(
+                (String)bookAttributes.get("author"),
+                (String)bookAttributes.get("title"),
+                (String)bookAttributes.get("publisher"),
+                (int)bookAttributes.get("datePublished"),
+                (String)bookAttributes.get("subject")
+        );
+        bookArray.add(textbook);
+        i++;
+    }
+
+    private void createNovel(HashMap<String, Object> bookAttributes) {
+        Novel novel = new Novel(
+                (String)bookAttributes.get("author"),
+                (String)bookAttributes.get("title"),
+                (String)bookAttributes.get("publisher"),
+                (int)bookAttributes.get("datePublished"),
+                (String)bookAttributes.get("genre")
+        );
+        bookArray.add(novel);
+        i++;
+    }
+
+    private void createDefaultTextbook() {
+        Textbook tb = new Textbook();
+        bookArray.add(tb);
+    }
+
+    private void createDefaultBook() {
+        Novel n = new Novel();
+        bookArray.add(n);
+    }
+
+    private void putTextbook() {
+        HashMap<String, Object> bookAttributes;
+        if(isIteratorAtEnd()) {
+            createDefaultTextbook();
+        } else {
+            if(containsComma()) {
+                bookAttributes = getBookOptions(arguments[i+1].split(","));
+                createTextbook(bookAttributes);
+            } else if (isIteratorNotAtEnd()){
+                createDefaultTextbook();
             }
+        }
+    }
+
+    private void putNovel() {
+        HashMap<String, Object> bookAttributes;
+        if(isIteratorAtEnd()) {
+            createDefaultBook();
+        } else {
+            if(containsComma()) {
+                bookAttributes = getBookOptions(arguments[i+1].split(","));
+                createNovel(bookAttributes);
+            } else if (isIteratorNotAtEnd()){
+                createDefaultBook();
+            }
+        }
+    }
+
+    private boolean containsComma() {
+        return arguments[i+1].contains(",");
+    }
+
+    private boolean isIteratorAtEnd() {
+        return i == (arguments.length - 1);
+    }
+
+    private boolean isIteratorNotAtEnd() {
+        return i != (arguments.length - 1);
+    }
+
+    private void putOnShelf() {
+        while(i < arguments.length) {
+            if(isTextbook()) {
+                putTextbook();
+            } else if (isNovel()) {
+                putNovel();
+            }
+            i++;
         }
     }
 }
